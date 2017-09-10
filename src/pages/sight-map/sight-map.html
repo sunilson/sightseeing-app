@@ -1,0 +1,33 @@
+<!--
+  Generated template for the SightMapPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{"sight_map" | translate}} {{sightList?.name}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only navPop><ion-icon name="close"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <agm-map #gm [latitude]="sightList?.center.lat" [longitude]="sightList?.center.long" [zoom]="10" (mapClick)="mapClicked($event)">
+    <agm-marker *ngFor="let sight of sightList?.getSights()" [latitude]="sight.location.lat" [longitude]="sight.location.long"
+      (markerClick)="gm.lastOpen?.close(); gm.lastOpen = infoWindow">
+      <agm-info-window #infoWindow>
+        <img class="infoImg" src="{{sight.thumbnail}}">
+        <p class="infoHeadline" style="max-width: 200px">{{sight.name}}</p>
+        <p class="infoAddress" style="max-width: 200px">
+          {{sight.address}}
+        </p>
+        <button ion-button outline block (click)="moreInfo(sight)" class="infoButton">{{"more_info" | translate}}</button>
+      </agm-info-window>
+    </agm-marker>
+  </agm-map>
+</ion-content>

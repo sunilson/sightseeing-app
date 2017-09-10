@@ -1,0 +1,19 @@
+<ion-menu [content]="mycontent">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>
+                Deine Listen
+            </ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-list>
+            <button ion-item menuClose *ngFor="let list of listService.getLists()" (click)="openList(list)">
+                <h2>{{list.name}}</h2>
+                <p>{{list.getFormattedDate()}}</p>
+            </button>
+        </ion-list>
+    </ion-content>
+</ion-menu>
+
+<ion-nav #mycontent [root]="rootPage"></ion-nav>

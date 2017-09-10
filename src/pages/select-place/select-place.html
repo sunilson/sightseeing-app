@@ -1,0 +1,30 @@
+<!--
+  Generated template for the SelectPlacePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{"select_place" | translate}}</ion-title>
+    <ion-buttons left>
+      <button ion-button icon-only menuToggle><ion-icon name="menu"></ion-icon></button>
+    </ion-buttons>
+    <ion-buttons right>
+      <button ion-button icon-only (click)="toggleSettings()"><ion-icon name="settings"></ion-icon></button>
+      <button ion-button icon-only (click)="toggleSearch()"><ion-icon name="search"></ion-icon></button>
+      <button *ngIf="marker" ion-button (click)="done()">{{"done" | translate}}</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <agm-map [latitude]="location.lat" [longitude]="location.long" [zoom]="11" (mapClick)="mapClicked($event)">
+    <agm-circle *ngIf="marker" fillColor="blue" [clickable]="circleClickable" [latitude]="marker.lat" [longitude]="marker.long"
+      [radius]="settingsService.getRadius() * 1000"></agm-circle>
+    <agm-marker *ngIf="marker" [latitude]="marker.lat" [longitude]="marker.long">
+    </agm-marker>
+  </agm-map>
+</ion-content>

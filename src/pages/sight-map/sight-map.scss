@@ -1,0 +1,23 @@
+page-sight-map {
+agm-map {
+        height: 100%;
+    }
+
+    .infoImg {
+        width: 100%
+    }
+
+    .infoHeadline {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .infoAddress {
+        margin-top: 0;
+    }
+
+    .infoButton {
+        height: 30px;
+    }
+}

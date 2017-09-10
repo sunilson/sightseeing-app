@@ -1,0 +1,30 @@
+<!--
+  Generated template for the SearchPlacePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Search for a place</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="close()"><ion-icon name="close"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-searchbar #searchBar (ionInput)="onInput($event)" debounce="250">
+  </ion-searchbar>
+  <div *ngIf="searching" class="spinnerContainer" text-center>
+    <ion-spinner>
+    </ion-spinner>
+  </div>
+  <ion-list>
+    <button ion-item *ngFor="let item of objectKeys(result)" (click)="predictionClicked(item)">
+      {{result[item].description}}
+    </button>
+  </ion-list>
+</ion-content>
