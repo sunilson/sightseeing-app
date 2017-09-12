@@ -35,7 +35,7 @@
       <button ion-item (click)="openWebsite()"><ion-icon name="globe" item-start color="primary"></ion-icon> {{detailledSight?.website}}</button>
       <button ion-item (click)="openMap()"><ion-icon name="pin" item-start color="primary"></ion-icon> {{detailledSight?.formatted_address}}</button>
       <button ion-item (click)="call()"><ion-icon name="call" item-start color="primary"></ion-icon> {{detailledSight?.international_phone_number}}</button>
-      <button ion-item><ion-icon name="star" item-start color="primary"></ion-icon> Rating {{detailledSight?.rating}}</button>
+      <button ion-item><ion-icon name="star" item-start color="primary"></ion-icon> {{"rating" | translate}}: {{detailledSight?.rating}}</button>
       <button ion-item (click)="showOpenHours()"><ion-icon name="clock" item-start color="primary"></ion-icon> {{openingHours}}</button>
     </ion-list>
     <agm-map [latitude]="sight.location.lat" [longitude]="sight.location.long" [zoom]="16" (mapClick)="mapClicked($event)">

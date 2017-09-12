@@ -101,7 +101,7 @@ export class SightListPage {
             "location": new google.maps.LatLng(this.location.lat, this.location.long),
             "keyword": result["keyword"],
             "radius": this.navParams.get("radius") * 1000,
-            "opennow": this.navParams.get("openOnly"),
+            "openNow": this.navParams.get("openOnly"),
             "type": "point_of_interest"
           }, (result) => {
             this.loading = false;

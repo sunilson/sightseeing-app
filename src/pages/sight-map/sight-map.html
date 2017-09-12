@@ -17,7 +17,7 @@
 
 
 <ion-content>
-  <agm-map #gm [latitude]="sightList?.center.lat" [longitude]="sightList?.center.long" [zoom]="10" (mapClick)="mapClicked($event)">
+  <agm-map #gm [latitude]="sightList?.center.lat" [longitude]="sightList?.center.long" [zoom]="10" (mapClick)="gm.lastOpen?.close()">
     <agm-marker *ngFor="let sight of sightList?.getSights()" [latitude]="sight.location.lat" [longitude]="sight.location.long"
       (markerClick)="gm.lastOpen?.close(); gm.lastOpen = infoWindow">
       <agm-info-window #infoWindow>
