@@ -15,8 +15,7 @@ export class LanguageService {
 
     initializeLanguage() {
         this.translateService.setDefaultLang("en");
-        this.translateService.use(navigator.language);
-
+        this.translateService.use(navigator.language.substr(0, 2));
         this.storage.get("language").then(value => {
             this.currentLang = value;
             if (this.currentLang) {

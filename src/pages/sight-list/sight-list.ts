@@ -58,7 +58,6 @@ export class SightListPage {
             text: values["confirm"],
             handler: data => {
               this.sightList.removeSight(sight);
-              this.sightList.removeSight(sight);
               this.changeDetector.detectChanges();
             }
           }
