@@ -41,11 +41,7 @@ export class SearchPlacePage {
     });
   }
 
-  ionViewDidEnter() {
-    setTimeout(() => {
-      this.searchBar.setFocus();
-    }, 150);
-  }
+  ionViewDidEnter = () => setTimeout(() => this.searchBar.setFocus(), 150)
 
   onInput(event) {
     if (this.placesService) {
@@ -57,14 +53,8 @@ export class SearchPlacePage {
           this.searching = false;
           this.changeDetector.detectChanges();
         });
-      } else {
-        this.searching = false;
-      }
+      } else this.searching = false;
     }
-  }
-
-  close() {
-    this.navCtrl.pop();
   }
 
   predictionClicked(item) {
