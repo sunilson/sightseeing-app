@@ -39,8 +39,7 @@ export class SightListPage {
     private alertCtrl: AlertController,
     private translateService: TranslateService,
     private modalCtrl: ModalController
-  ) {
-  }
+  ) { }
 
   delete(event, sight: Sight) {
     event.stopPropagation();
@@ -90,40 +89,37 @@ export class SightListPage {
   }
 
   ionViewWillEnter() {
-    this.translateService.get(["keyword", "unsaved_list"]).subscribe(result => {
-      this.sightList = new SightList(result["unsaved_list"]);
-      if (this.navParams.get("location")) {
-        this.location = this.navParams.get("location");
-        this._mapsAPILoader.load().then(() => {
-          this.placesService = new google.maps.places.PlacesService(this.map.nativeElement);
-          this.placesService.nearbySearch({
-            "location": new google.maps.LatLng(this.location.lat, this.location.long),
-            "keyword": result["keyword"],
-            "radius": this.navParams.get("radius") * 1000,
-            "openNow": this.navParams.get("openOnly"),
-            "type": "point_of_interest"
-          }, (result) => {
-            this.loading = false;
-            this.sightList.clear();
-            this.sightList.center = this.location;
-            for (let sight of result) {
-              console.log(sight);
-              this.sightList.addSight(new Sight(sight.name,
-                typeof sight.photos !== "undefined" ? sight.photos[0].getUrl({ "maxWidth": 100, "maxHeight": 100 }) : '',
-                typeof sight.photos !== "undefined" ? sight.photos[0].getUrl({ "maxWidth": 1000, "maxHeight": 1000 }) : '',
-                sight.rating, sight.vicinity,
-                sight.place_id,
-                new Location(sight.geometry.location.lat(), sight.geometry.location.lng())));
-            }
-            this.changeDetector.detectChanges();
-          });
+    this.sightList = new SightList(this.translateService.instant(["unsaved_list"])["unsaved_list"]);
+    if (this.navParams.get("location")) {
+      this.location = this.navParams.get("location");
+      this._mapsAPILoader.load().then(() => {
+        this.placesService = new google.maps.places.PlacesService(this.map.nativeElement);
+        this.placesService.nearbySearch({
+          "location": new google.maps.LatLng(this.location.lat, this.location.long),
+          "keyword": this.translateService.instant(["keyword"])["keyword"],
+          "radius": this.navParams.get("radius") * 1000,
+          "openNow": this.navParams.get("openOnly"),
+          "type": "point_of_interest"
+        }, (result) => {
+          this.loading = false;
+          this.sightList.clear();
+          this.sightList.center = this.location;
+          for (let sight of result) {
+            this.sightList.addSight(new Sight(sight.name,
+              typeof sight.photos !== "undefined" ? sight.photos[0].getUrl({ "maxWidth": 100, "maxHeight": 100 }) : '',
+              typeof sight.photos !== "undefined" ? sight.photos[0].getUrl({ "maxWidth": 1000, "maxHeight": 1000 }) : '',
+              sight.rating, sight.vicinity,
+              sight.place_id,
+              new Location(sight.geometry.location.lat(), sight.geometry.location.lng())));
+          }
+          this.changeDetector.detectChanges();
+          console.log(this.sightList)
         });
-      } else {
-        this.sightList = this.listService.getList(this.navParams.get("id"));
-        this.loading = false;
-        console.log(this.sightList);
-      }
-    });
+      });
+    } else {
+      this.sightList = this.listService.getList(this.navParams.get("id"));
+      this.loading = false;
+    }
   }
 
   openMap() {
@@ -150,22 +146,22 @@ export class SightListPage {
           }
         ],
         buttons:
-        [
-          {
-            text: 'Cancel',
-            role: 'cancel',
-            handler: data => {
+          [
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: data => {
+              }
+            },
+            {
+              text: 'Save',
+              handler: data => {
+                this.sightList.name = data.name;
+                this.listService.addList(this.sightList);
+                this.navCtrl.pop();
+              }
             }
-          },
-          {
-            text: 'Save',
-            handler: data => {
-              this.sightList.name = data.name;
-              this.listService.addList(this.sightList);
-              this.navCtrl.pop();
-            }
-          }
-        ]
+          ]
       }).present();
     } else {
       this.listService.changeList(this.sightList);

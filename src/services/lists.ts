@@ -8,15 +8,23 @@ export class ListService {
 
     lists: SightList[] = [];
 
-    constructor(private storage: Storage, private translateService: TranslateService) {
+    constructor(private storage: Storage, private translateService: TranslateService) { }
 
-    }
-
+    /**
+     * Add a new list and store it to the local storage
+     * 
+     * @param list 
+     */
     addList(list: SightList) {
         this.lists.push(list);
         this.storage.set("lists", JSON.stringify(this.lists));
     }
 
+    /**
+     * Replace a list
+     * 
+     * @param list 
+     */
     changeList(list: SightList) {
         for (let i = 0; i < this.lists.length; i++) {
             if (this.lists[i].id == list.id) {
@@ -25,6 +33,11 @@ export class ListService {
         }
     }
 
+    /**
+     * Returns a saved list or null
+     * 
+     * @param id The id of the list
+     */
     getList(id: string): SightList {
         for (let i = 0; i < this.lists.length; i++) {
             if (this.lists[i].id == id) {
@@ -32,10 +45,6 @@ export class ListService {
             }
         }
         return null;
-    }
-
-    getLists() {
-        return this.lists;
     }
 
     removeList(id: string) {
@@ -48,19 +57,18 @@ export class ListService {
         }
     }
 
+    /**
+     * Retrieve lists from local storage
+     */
     initialize() {
         this.storage.get("lists").then(lists => {
-            if (lists) {
-                let temp = JSON.parse(lists);
-                temp.forEach(element => {
-                    this.translateService.get(["unsaved_list"]).subscribe(result => {
-                        let tempList = new SightList(result["unsaved_list"]);
-                        tempList.initialize(element.name, element.id, element.creationDate, element.sights, element.center);
-                        this.lists.push(tempList);
-                    });
-                });
-                console.log(this.lists);
-            }
+            if (lists) JSON.parse(lists).
+                forEach(element => this.lists.push(
+                    new SightList(element.name,
+                        element.id,
+                        element.creationDate,
+                        element.sights,
+                        element.center)));
         });
     }
 }

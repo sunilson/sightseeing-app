@@ -8,15 +8,9 @@ export class SelectedLocationService {
 
     private subject = new Subject<Location>();
 
-    constructor() {
+    constructor() { }
 
-    }
+    changeLocation = (location: Location) => this.subject.next(location)
 
-    changeLocation(location: Location) {
-        this.subject.next(location);
-    }
-
-    getLocation(): Observable<Location> {
-        return this.subject.asObservable();
-    }
+    getLocation = (): Observable<Location> => this.subject.asObservable()
 }

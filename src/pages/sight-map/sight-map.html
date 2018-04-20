@@ -9,7 +9,9 @@
   <ion-navbar>
     <ion-title>{{"sight_map" | translate}} {{sightList?.name}}</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only navPop><ion-icon name="close"></ion-icon></button>
+      <button ion-button icon-only navPop>
+        <ion-icon name="close"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 
@@ -18,8 +20,7 @@
 
 <ion-content>
   <agm-map #gm [latitude]="sightList?.center.lat" [longitude]="sightList?.center.long" [zoom]="10" (mapClick)="gm.lastOpen?.close()">
-    <agm-marker *ngFor="let sight of sightList?.getSights()" [latitude]="sight.location.lat" [longitude]="sight.location.long"
-      (markerClick)="gm.lastOpen?.close(); gm.lastOpen = infoWindow">
+    <agm-marker *ngFor="let sight of sightList?.sights" [latitude]="sight.location.lat" [longitude]="sight.location.long" (markerClick)="gm.lastOpen?.close(); gm.lastOpen = infoWindow">
       <agm-info-window #infoWindow>
         <img class="infoImg" src="{{sight.thumbnail}}">
         <p class="infoHeadline" style="max-width: 200px">{{sight.name}}</p>

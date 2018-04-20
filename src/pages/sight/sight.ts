@@ -57,31 +57,19 @@ export class SightPage {
     });
   }
 
-  openWebsite() {
-    if (this.detailledSight.website) {
-      window.open(this.detailledSight.website);
-    }
-  }
+  openWebsite = () => { if (this.detailledSight.website) window.open(this.detailledSight.website) }
 
-  call() {
-    if (this.detailledSight.international_phone_number) {
-      this.callNumber.callNumber(this.detailledSight.international_phone_number, true);
-    }
-  }
+  call = () => { if (this.detailledSight.international_phone_number) this.callNumber.callNumber(this.detailledSight.international_phone_number, true) }
 
-  openMap() {
-    this.launchNavigator.navigate([this.sight.location.lat, this.sight.location.long], {
-      app: this.launchNavigator.APP.GOOGLE_MAPS
-    });
-  }
+  openMap = () => this.launchNavigator.navigate([this.sight.location.lat, this.sight.location.long], {
+    app: this.launchNavigator.APP.GOOGLE_MAPS
+  });
 
   showOpenHours() {
-    this.translateService.get(["dismiss", "opening_hours"]).subscribe(values => {
-      this.alertCtrl.create({
-        title: values["opening_hours"],
-        subTitle: this.openingHours,
-        buttons: [values["dismiss"]]
-      }).present();
-    });
+    this.alertCtrl.create({
+      title: this.translateService.instant(["opening_hours"])["opening_hours"],
+      subTitle: this.openingHours,
+      buttons: [this.translateService.instant(["dismiss"])["dismiss"]]
+    }).present();
   }
 }

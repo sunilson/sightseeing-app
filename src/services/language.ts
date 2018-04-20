@@ -9,9 +9,7 @@ export class LanguageService {
 
     currentLang: string;
 
-    constructor(private translateService: TranslateService, private storage: Storage, private alertCtrl: AlertController) {
-
-    }
+    constructor(private translateService: TranslateService, private storage: Storage, private alertCtrl: AlertController) { }
 
     initializeLanguage() {
         this.translateService.setDefaultLang("en");

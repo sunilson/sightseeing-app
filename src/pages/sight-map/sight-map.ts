@@ -20,13 +20,12 @@ export class SightMapPage {
 
   sightList: SightList;
 
-  constructor(private translateSerivce: TranslateService, public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController) {
-  }
+  constructor(private translateSerivce: TranslateService,
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private modalCtrl: ModalController) { }
 
-  ionViewDidLoad() {
-    this.sightList = this.navParams.get("sightList");
-    console.log('ionViewDidLoad SightMapPage');
-  }
+  ionViewDidLoad = () => this.sightList = this.navParams.get("sightList")
 
   moreInfo(sight: Sight) {
     this.modalCtrl.create("SightPage", {
